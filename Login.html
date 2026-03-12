@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#e0c3fc">
+    
+    <!-- SEO Optimization -->
+    <title>Login | Cortex Secure Messaging</title>
+    <meta name="description" content="Log in to Cortex, the modern, highly professional web messaging application.">
+    
+    <!-- Tailwind CSS (Framework) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Phosphor Icons (Modern crisp icons) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- Google Fonts (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
+                        'glass-inner': 'inset 0 1px 1px rgba(255, 255, 255, 0.4)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom App Styling -->
+    <style>
+        /* Smooth anti-aliasing */
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            
+            /* Animated Gradient Background for Glassmorphism */
+            background: linear-gradient(-45deg, #e0c3fc, #8ec5fc, #fbc2eb, #a18cd1);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Input auto-fill styling override for glassmorphism */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        input:-webkit-autofill:active{
+            -webkit-box-shadow: 0 0 0 30px rgba(255, 255, 255, 0.5) inset !important;
+            -webkit-text-fill-color: #1f2937 !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+    </style>
+</head>
+
+<body class="text-gray-900 h-screen w-screen overflow-hidden m-0 p-0 flex items-center justify-center">
+
+    <!-- Login Container -->
+    <main class="w-full max-w-md p-6 relative z-10 animate-fade-in">
+        
+        <!-- Glassmorphism Card -->
+        <div class="bg-white/30 backdrop-blur-xl p-10 rounded-[2.5rem] border border-white/40 shadow-glass w-full flex flex-col items-center relative overflow-hidden">
+            
+            <!-- Decorative background elements -->
+            <div class="absolute -top-10 -right-10 w-40 h-40 bg-white/20 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-brand-300/20 rounded-full blur-2xl pointer-events-none"></div>
+            
+            <!-- Logo Icon -->
+            <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-white shadow-lg shadow-brand-500/30 border border-white/20 mb-6 relative z-10">
+                <i class="ph ph-brain text-4xl"></i>
+            </div>
+            
+            <!-- LOGIN VIEW -->
+            <div id="login-view" class="w-full flex flex-col items-center animate-fade-in transition-all">
+                <!-- Header Text -->
+                <div class="text-center mb-8 relative z-10">
+                    <h1 class="text-3xl font-bold text-gray-800 drop-shadow-sm mb-2">Welcome Back</h1>
+                    <p class="text-sm text-gray-600">Enter your credentials to access your secure portal.</p>
+                </div>
+                
+                <!-- Login Form -->
+                <form id="login-form" onsubmit="handleLogin(event)" class="w-full flex flex-col gap-5 relative z-10">
+                    
+                    <!-- Alert Message Container -->
+                    <div id="login-msg" class="w-full empty:hidden transition-all"></div>
+
+                    <!-- Login ID Input -->
+                    <div class="flex flex-col gap-1.5">
+                        <label for="login-id" class="text-sm font-semibold text-gray-700 ml-1">Login ID</label>
+                        <div class="relative">
+                            <i class="ph ph-identification-badge absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg"></i>
+                            <input type="text" id="login-id" name="login_id" placeholder="johndoe123" required 
+                                class="w-full bg-white/30 border border-white/40 text-[15px] text-gray-800 rounded-2xl pl-11 pr-4 py-3.5 focus:outline-none focus:bg-white/50 focus:border-white/60 focus:ring-2 focus:ring-white/50 transition-all placeholder-gray-500 shadow-glass-inner">
+                        </div>
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="flex flex-col gap-1.5">
+                        <div class="flex justify-between items-center ml-1">
+                            <label for="password" class="text-sm font-semibold text-gray-700">Password</label>
+                            <a href="#" class="text-xs font-medium text-brand-700 hover:text-brand-800 transition-colors drop-shadow-sm">Forgot password?</a>
+                        </div>
+                        <div class="relative">
+                            <i class="ph ph-lock-key absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg"></i>
+                            <input type="password" id="password" name="password" placeholder="••••••••" required 
+                                class="w-full bg-white/30 border border-white/40 text-[15px] text-gray-800 rounded-2xl pl-11 pr-11 py-3.5 focus:outline-none focus:bg-white/50 focus:border-white/60 focus:ring-2 focus:ring-white/50 transition-all placeholder-gray-500 shadow-glass-inner">
+                            <button type="button" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors" aria-label="Toggle password visibility">
+                                <i class="ph ph-eye text-lg"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Remember Me -->
+                    <div class="flex items-center gap-2 mt-1 ml-1">
+                        <input type="checkbox" id="remember" name="remember" class="w-4 h-4 rounded border-white/40 bg-white/30 text-brand-600 focus:ring-brand-500/50 cursor-pointer">
+                        <label for="remember" class="text-sm text-gray-700 cursor-pointer">Keep me logged in</label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" id="login-submit-btn" class="w-full mt-2 py-4 bg-gradient-to-br from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white rounded-2xl shadow-lg shadow-brand-500/30 border border-brand-400/50 transition-all font-semibold text-[15px] flex items-center justify-center gap-2 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed">
+                        Sign In
+                        <i class="ph ph-arrow-right text-lg"></i>
+                    </button>
+                </form>
+                
+                <!-- Footer Text -->
+                <p class="mt-8 text-sm text-gray-600 text-center relative z-10">
+                    Don't have an account yet? 
+                    <button type="button" onclick="toggleAuthView('register')" class="font-semibold text-brand-700 hover:text-brand-800 transition-colors drop-shadow-sm">Create Account</button>
+                </p>
+            </div>
+
+            <!-- REGISTER VIEW -->
+            <div id="register-view" class="w-full flex flex-col items-center hidden transition-all">
+                <!-- Header Text -->
+                <div class="text-center mb-8 relative z-10">
+                    <h1 class="text-3xl font-bold text-gray-800 drop-shadow-sm mb-2">Create Account</h1>
+                    <p class="text-sm text-gray-600">Join Cortex to secure your conversations.</p>
+                </div>
+                
+                <!-- Register Form -->
+                <form id="register-form" onsubmit="handleRegister(event)" class="w-full flex flex-col gap-4 relative z-10">
+                    
+                    <!-- Alert Message Container -->
+                    <div id="register-msg" class="w-full empty:hidden transition-all"></div>
+
+                    <!-- Name Input -->
+                    <div class="flex flex-col gap-1.5">
+                        <label for="reg-name" class="text-sm font-semibold text-gray-700 ml-1">Full Name</label>
+                        <div class="relative">
+                            <i class="ph ph-user absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg"></i>
+                            <input type="text" id="reg-name" name="name" placeholder="John Doe" required 
+                                class="w-full bg-white/30 border border-white/40 text-[15px] text-gray-800 rounded-2xl pl-11 pr-4 py-3 focus:outline-none focus:bg-white/50 focus:border-white/60 focus:ring-2 focus:ring-white/50 transition-all placeholder-gray-500 shadow-glass-inner">
+                        </div>
+                    </div>
+
+                    <!-- Login ID Input -->
+                    <div class="flex flex-col gap-1.5">
+                        <label for="reg-login-id" class="text-sm font-semibold text-gray-700 ml-1">Login ID</label>
+                        <div class="relative">
+                            <i class="ph ph-identification-badge absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg"></i>
+                            <input type="text" id="reg-login-id" name="login_id" placeholder="johndoe123" required 
+                                class="w-full bg-white/30 border border-white/40 text-[15px] text-gray-800 rounded-2xl pl-11 pr-4 py-3 focus:outline-none focus:bg-white/50 focus:border-white/60 focus:ring-2 focus:ring-white/50 transition-all placeholder-gray-500 shadow-glass-inner">
+                        </div>
+                    </div>
+
+                    <!-- Email Input -->
+                    <div class="flex flex-col gap-1.5">
+                        <label for="reg-email" class="text-sm font-semibold text-gray-700 ml-1">Email Address</label>
+                        <div class="relative">
+                            <i class="ph ph-envelope-simple absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg"></i>
+                            <input type="email" id="reg-email" name="email" placeholder="hello@example.com" required 
+                                class="w-full bg-white/30 border border-white/40 text-[15px] text-gray-800 rounded-2xl pl-11 pr-4 py-3 focus:outline-none focus:bg-white/50 focus:border-white/60 focus:ring-2 focus:ring-white/50 transition-all placeholder-gray-500 shadow-glass-inner">
+                        </div>
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="flex flex-col gap-1.5">
+                        <label for="reg-password" class="text-sm font-semibold text-gray-700 ml-1">Password</label>
+                        <div class="relative">
+                            <i class="ph ph-lock-key absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg"></i>
+                            <input type="password" id="reg-password" name="password" placeholder="••••••••" required 
+                                class="w-full bg-white/30 border border-white/40 text-[15px] text-gray-800 rounded-2xl pl-11 pr-11 py-3 focus:outline-none focus:bg-white/50 focus:border-white/60 focus:ring-2 focus:ring-white/50 transition-all placeholder-gray-500 shadow-glass-inner">
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" id="register-submit-btn" class="w-full mt-3 py-4 bg-gradient-to-br from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white rounded-2xl shadow-lg shadow-brand-500/30 border border-brand-400/50 transition-all font-semibold text-[15px] flex items-center justify-center gap-2 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed">
+                        Create Account
+                        <i class="ph ph-user-plus text-lg"></i>
+                    </button>
+                </form>
+                
+                <!-- Footer Text -->
+                <p class="mt-6 text-sm text-gray-600 text-center relative z-10">
+                    Already have an account? 
+                    <button type="button" onclick="toggleAuthView('login')" class="font-semibold text-brand-700 hover:text-brand-800 transition-colors drop-shadow-sm">Sign In</button>
+                </p>
+            </div>
+            
+        </div>
+    </main>
+
+    <!-- UI & API Logic -->
+    <script>
+        // ==========================================
+        // API CONFIGURATION
+        // ==========================================
+        // Replace this URL with your generated Google Apps Script Web App URL
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzZMVtor5OdwPKd47xAy5UnsUROxB-NDayumxNnuTimZ5BpLncsm0NU6yPJPLGu8cs_/exec"; 
+
+        // Toggle between Login and Register views
+        function toggleAuthView(view) {
+            const loginView = document.getElementById('login-view');
+            const registerView = document.getElementById('register-view');
+            
+            // Clear messages when switching views
+            document.getElementById('login-msg').innerHTML = '';
+            document.getElementById('register-msg').innerHTML = '';
+
+            if (view === 'register') {
+                loginView.classList.add('hidden');
+                loginView.classList.remove('animate-fade-in');
+                registerView.classList.remove('hidden');
+                setTimeout(() => registerView.classList.add('animate-fade-in'), 10);
+            } else {
+                registerView.classList.add('hidden');
+                registerView.classList.remove('animate-fade-in');
+                loginView.classList.remove('hidden');
+                setTimeout(() => loginView.classList.add('animate-fade-in'), 10);
+            }
+        }
+
+        // Handle the Login Request
+        async function handleLogin(e) {
+            e.preventDefault();
+            const btn = document.getElementById('login-submit-btn');
+            const msgBox = document.getElementById('login-msg');
+            const originalText = btn.innerHTML;
+
+            // Set loading state
+            btn.disabled = true;
+            btn.innerHTML = '<i class="ph ph-spinner animate-spin text-xl"></i> Authenticating...';
+            msgBox.innerHTML = '';
+
+            const login_id = document.getElementById('login-id').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'login', login_id, password }),
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' } // 'text/plain' bypasses CORS preflight
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    msgBox.innerHTML = `<div class="p-3 mb-2 rounded-xl bg-green-500/20 border border-green-500/30 text-green-900 text-sm font-medium text-center shadow-sm">Login successful! Redirecting...</div>`;
+                    
+                    // You can optionally store user info here before redirecting
+                    // localStorage.setItem('cortex_user', result.name);
+                    
+                    setTimeout(() => { window.location.href = 'index.html'; }, 1000);
+                } else {
+                    msgBox.innerHTML = `<div class="p-3 mb-2 rounded-xl bg-red-500/20 border border-red-500/30 text-red-900 text-sm font-medium text-center shadow-sm">${result.message}</div>`;
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                }
+            } catch (error) {
+                msgBox.innerHTML = `<div class="p-3 mb-2 rounded-xl bg-red-500/20 border border-red-500/30 text-red-900 text-sm font-medium text-center shadow-sm">Network Error. Ensure your Web App URL is correct.</div>`;
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        }
+
+        // Handle the Register Request
+        async function handleRegister(e) {
+            e.preventDefault();
+            const btn = document.getElementById('register-submit-btn');
+            const msgBox = document.getElementById('register-msg');
+            const originalText = btn.innerHTML;
+
+            // Set loading state
+            btn.disabled = true;
+            btn.innerHTML = '<i class="ph ph-spinner animate-spin text-xl"></i> Registering...';
+            msgBox.innerHTML = '';
+
+            const name = document.getElementById('reg-name').value.trim();
+            const login_id = document.getElementById('reg-login-id').value.trim();
+            const email = document.getElementById('reg-email').value.trim();
+            const password = document.getElementById('reg-password').value.trim();
+
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'register', login_id, password, name, email }),
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    msgBox.innerHTML = `<div class="p-3 mb-2 rounded-xl bg-green-500/20 border border-green-500/30 text-green-900 text-sm font-medium text-center shadow-sm">${result.message}</div>`;
+                    
+                    // Switch back to login view after successful registration
+                    setTimeout(() => {
+                        document.getElementById('register-form').reset();
+                        toggleAuthView('login');
+                        // Pre-fill login ID to be helpful
+                        document.getElementById('login-id').value = login_id;
+                    }, 2000);
+                } else {
+                    msgBox.innerHTML = `<div class="p-3 mb-2 rounded-xl bg-red-500/20 border border-red-500/30 text-red-900 text-sm font-medium text-center shadow-sm">${result.message}</div>`;
+                }
+            } catch (error) {
+                msgBox.innerHTML = `<div class="p-3 mb-2 rounded-xl bg-red-500/20 border border-red-500/30 text-red-900 text-sm font-medium text-center shadow-sm">Network Error. Ensure your Web App URL is correct.</div>`;
+            }
+            
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+        }
+    </script>
+
+    <!-- Simple animations -->
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
+</body>
+</html>
